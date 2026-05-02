@@ -1,1 +1,0 @@
-{"pdf_file": "mps pcpnc.pdf", "model": "llama-3.3-70b-specdec", "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", "chunk_size": 1000, "chunk_overlap": 200}

@@ -5,11 +5,8 @@ const i18n = {
     labelMonth: 'Pregnancy Month',
     submit: 'Get Guidance',
     chooseMonth: '-- Select month --',
-    notFound: 'If you don\'t see what you have, try talking to our chatbot.',
-    chatLinkText: 'Open chatbot',
-    chatSuggestion: 'Want more personalized help? Chat with our AI assistant',
-    agentName: 'Maya',
-    talkToAgent: 'Talk with Maya'
+    notFound: 'If you don\'t see what you have, try browsing other months.',
+    chatLinkText: ''
   },
   ar: {
     title: 'إرشادات للحامل حسب الشهر',
@@ -17,11 +14,8 @@ const i18n = {
     labelMonth: 'الشهر',
     submit: 'عرض الإرشادات',
     chooseMonth: '-- اختاري الشهر --',
-    notFound: 'ما لقيتش اللي تحس به؟ تنجمي تحكي مع الشات بوت',
-    chatLinkText: 'افتح الشات بوت',
-    chatSuggestion: 'تحبي مساعدة أكثر مخصصة؟ تحدثي مع المرافقة الذكية',
-    agentName: 'مايا',
-    talkToAgent: 'تحكي مع مايا'
+    notFound: 'ما لقيتش اللي تحس به؟ تفرّجي على أشهر أخرى.',
+    chatLinkText: ''
   }
 };
 
@@ -152,13 +146,6 @@ function renderMonth(month){
     p.className = 'muted';
     p.textContent = i18n[currentLang].notFound;
     results.appendChild(p);
-    const a = document.createElement('a');
-    a.href = 'chatbot.html';
-    a.textContent = i18n[currentLang].chatLinkText;
-    a.style.display = 'inline-block';
-    a.style.marginTop = '8px';
-    a.className = 'button-link';
-    chatSuggestion.appendChild(a);
     return;
   }
 
@@ -182,23 +169,7 @@ function renderMonth(month){
     results.appendChild(box);
   });
 
-  // append AI assistant suggestion at end
-  const sugBox = document.createElement('div');
-  sugBox.className = 'problem';
-  sugBox.style.display = 'flex';
-  sugBox.style.flexDirection = 'column';
-  sugBox.style.alignItems = 'flex-start';
-  const sugText = document.createElement('p');
-  sugText.className = 'muted';
-  sugText.textContent = i18n[currentLang].chatSuggestion + ' ' + i18n[currentLang].agentName + '.';
-  const sugAction = document.createElement('a');
-  sugAction.href = 'ai_agent.html';
-  sugAction.className = 'button-link';
-  sugAction.textContent = i18n[currentLang].talkToAgent;
-  sugAction.style.marginTop = '8px';
-  sugBox.appendChild(sugText);
-  sugBox.appendChild(sugAction);
-  results.appendChild(sugBox);
+  // static site: no AI assistant suggestion
 }
 
 document.getElementById('month-form').addEventListener('submit', e => {

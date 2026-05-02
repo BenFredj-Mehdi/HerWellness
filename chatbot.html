@@ -17,36 +17,20 @@
     <main class="container">
       <h1>الشات بوت (نصّي وصوتي)</h1>
       <p class="lead">تنجم تكتب بالدارجة أو حتى باللاتيني (arabizi) مثل: kifeh 3lik, ywali n3awdlek. الشات بوت يجاوب بالدارجة.</p>
-
-      <div style="margin-top:12px">
-        <label for="text-input">اكتب هنا (نص):</label>
-        <textarea id="text-input" rows="4" style="width:100%" placeholder="اكتب بالدارجة أو باللاتيني"></textarea>
-        <div style="margin-top:10px;display:flex;gap:8px">
-          <button id="send-btn">ارسال</button>
-          <button id="clear-btn">مسح</button>
-        </div>
-      </div>
-
-      <div id="chat-area" style="margin-top:12px"></div>
-
-      <p style="margin-top:12px"><a href="index.html">الرجوع للصفحة الرئيسية</a> · <a href="chat.html">واجهة الدردشة المتقدمة</a></p>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Chatbot (disabled)</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>الشات بوت (مُعطل)</h1>
+      <p class="lead">ميزات الشات متوقفة حالياً. هذا موقع ثابت فقط.</p>
+      <p><a href="index.html">العودة للصفحة الرئيسية</a></p>
     </main>
-
-    <script>
-      async function postChat(text){
-        const res = await fetch('/api/chat', {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text})});
-        return res.json();
-      }
-
-      document.getElementById('send-btn').addEventListener('click', async ()=>{
-        const txt = document.getElementById('text-input').value.trim();
-        if(!txt) return;
-        const area = document.getElementById('chat-area');
-        const userDiv = document.createElement('div'); userDiv.className='problem'; userDiv.textContent = 'أنت: ' + txt; area.prepend(userDiv);
-        const r = await postChat(txt);
-        const botDiv = document.createElement('div'); botDiv.className='problem'; botDiv.textContent = 'المساعد: ' + r.reply; area.prepend(botDiv);
-      });
-      document.getElementById('clear-btn').addEventListener('click', ()=>{ document.getElementById('text-input').value=''; });
-    </script>
   </body>
 </html>
+      async function postChat(text){

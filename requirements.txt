@@ -1,15 +1,2 @@
-fastapi
-uvicorn[standard]
-python-dotenv
-groq
-livekit-agents
-websockets
-numpy
-aiohttp
-python-multipart
-protobuf
-soundfile
-webrtcvad
-faiss-cpu
-sentence-transformers
-langchain-core
+# Static frontend only — no backend Python dependencies required.
+# If you later re-enable a Python backend, restore appropriate requirements.
