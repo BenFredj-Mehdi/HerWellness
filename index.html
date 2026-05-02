@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>HerWellness — Welcome</title>
+    <title>HerWellness — مرحبا</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="welcome.css" />
   </head>
   <body>
+    <div class="global-lang">
+      <label for="lang" class="lang-label">اللغة</label>
+      <select id="lang" class="lang-select" aria-label="Language selector">
+        <option value="ar">العربية (تونسية)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
     <div class="bg-overlay"></div>
     <div class="floating-orb orb-1" aria-hidden="true"></div>
     <div class="floating-orb orb-2" aria-hidden="true"></div>
@@ -20,19 +27,19 @@
 
     <main class="welcome-shell">
       <section class="hero-card">
-        <p class="eyebrow">HERWELLNESS</p>
-        <h1 class="title">
-          Welcome to <span>your smart pregnancy companion</span>
+        <p class="eyebrow" id="brand-text">HERWELLNESS</p>
+        <h1 class="title" id="hero-title">
+          مرحبا بيك في <span>مرافق حملك الذكي</span>
         </h1>
 
         <p class="subtitle">
-          <span class="intro">Personalized guidance, emotional support, and trusted help for every stage of your journey.</span>
+          <span class="intro" id="intro-text">إرشادات مخصصة، دعم نفسي، ومساندة موثوقة في كل مرحلة من رحلتك.</span>
           <span class="dynamic-line" id="dynamic-line" aria-live="polite"></span>
         </p>
 
         <div class="cta-row">
           <a class="start-btn" href="guidance.html" id="start-btn">
-            <span>Start</span>
+            <span id="start-text">ابدئي</span>
             <i aria-hidden="true">→</i>
           </a>
         </div>

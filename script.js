@@ -6,7 +6,10 @@ const i18n = {
     submit: 'Get Guidance',
     chooseMonth: '-- Select month --',
     notFound: 'If you don\'t see what you have, try talking to our chatbot.',
-    chatLinkText: 'Open chatbot'
+    chatLinkText: 'Open chatbot',
+    chatSuggestion: 'Want more personalized help? Chat with our AI assistant',
+    agentName: 'Maya',
+    talkToAgent: 'Talk with Maya'
   },
   ar: {
     title: 'إرشادات للحامل حسب الشهر',
@@ -15,7 +18,10 @@ const i18n = {
     submit: 'عرض الإرشادات',
     chooseMonth: '-- اختاري الشهر --',
     notFound: 'ما لقيتش اللي تحس به؟ تنجمي تحكي مع الشات بوت',
-    chatLinkText: 'افتح الشات بوت'
+    chatLinkText: 'افتح الشات بوت',
+    chatSuggestion: 'تحبي مساعدة أكثر مخصصة؟ تحدثي مع المرافقة الذكية',
+    agentName: 'مايا',
+    talkToAgent: 'تحكي مع مايا'
   }
 };
 
@@ -175,6 +181,24 @@ function renderMonth(month){
     box.appendChild(todo);
     results.appendChild(box);
   });
+
+  // append AI assistant suggestion at end
+  const sugBox = document.createElement('div');
+  sugBox.className = 'problem';
+  sugBox.style.display = 'flex';
+  sugBox.style.flexDirection = 'column';
+  sugBox.style.alignItems = 'flex-start';
+  const sugText = document.createElement('p');
+  sugText.className = 'muted';
+  sugText.textContent = i18n[currentLang].chatSuggestion + ' ' + i18n[currentLang].agentName + '.';
+  const sugAction = document.createElement('a');
+  sugAction.href = 'ai_agent.html';
+  sugAction.className = 'button-link';
+  sugAction.textContent = i18n[currentLang].talkToAgent;
+  sugAction.style.marginTop = '8px';
+  sugBox.appendChild(sugText);
+  sugBox.appendChild(sugAction);
+  results.appendChild(sugBox);
 }
 
 document.getElementById('month-form').addEventListener('submit', e => {

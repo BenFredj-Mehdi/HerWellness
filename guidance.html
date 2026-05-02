@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="global-lang">
+      <label for="lang" class="lang-label">اللغة</label>
+      <select id="lang" class="lang-select" aria-label="Language selector">
+        <option value="ar">العربية (تونسية)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
     <main class="container">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
         <h1 id="site-title">إرشادات للحامل حسب الشهر</h1>
-        <div style="display:flex;gap:8px;align-items:center">
-          <label for="lang" class="muted">اللغة</label>
-          <select id="lang">
-            <option value="ar">العربية (تونسية)</option>
-            <option value="en">English</option>
-          </select>
-        </div>
       </div>
 
       <p id="site-lead" class="lead">اختاري الشهر اللي انتِ فيه باش تشوفي المشاكل الشائعة والحلول المقترحة.</p>

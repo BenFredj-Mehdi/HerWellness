@@ -14,6 +14,17 @@
     </style>
   </head>
   <body>
+    <div class="global-lang">
+      <label for="lang" class="lang-label">اللغة</label>
+      <select id="lang" class="lang-select" aria-label="Language selector">
+        <option value="ar">العربية (تونسية)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div id="server-status" class="server-status offline" title="Server status">
+      <span class="dot" style="background:#ef4444"></span>
+      <span class="label">غير متصل</span>
+    </div>
     <div class="chat-box">
       <h2>دردشة نصيّة (تدعم Arabizi)</h2>
       <div id="messages"></div>
@@ -27,6 +38,48 @@
     </div>
 
     <script>
+      // Server status indicator
+      (function(){
+        const statusEl = document.getElementById('server-status');
+        const dot = statusEl.querySelector('.dot');
+        const label = statusEl.querySelector('.label');
+        const langSel = document.getElementById('lang');
+        const texts = {
+          ar: { online: 'متصل', offline: 'غير متصل', checking: 'جارِ التحقق...' },
+          en: { online: 'Online', offline: 'Offline', checking: 'Checking...' }
+        };
+
+        async function checkServer(){
+          label.textContent = texts[langSel.value || 'ar'].checking;
+          try{
+            const res = await fetch('/api/health', {cache:'no-store'});
+            if(res.ok){
+              statusEl.classList.remove('offline'); statusEl.classList.add('online');
+              dot.style.background = '#22c55e';
+              label.textContent = texts[langSel.value || 'ar'].online;
+            }else{
+              statusEl.classList.remove('online'); statusEl.classList.add('offline');
+              dot.style.background = '#ef4444';
+              label.textContent = texts[langSel.value || 'ar'].offline;
+            }
+          }catch(err){
+            statusEl.classList.remove('online'); statusEl.classList.add('offline');
+            dot.style.background = '#ef4444';
+            label.textContent = texts[langSel.value || 'ar'].offline;
+          }
+        }
+
+        // initial check and interval
+        checkServer();
+        const poll = setInterval(checkServer, 5000);
+
+        // manual retry when clicking the badge
+        statusEl.addEventListener('click', ()=>{ checkServer(); });
+
+        // update label on language change
+        langSel.addEventListener('change', ()=>{ checkServer(); });
+      })();
+
       const messages = document.getElementById('messages');
       const input = document.getElementById('input');
 

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Maya — المرافقة الذكية</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .agent-hero{max-width:920px;margin:6vh auto;padding:28px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));backdrop-filter: blur(8px);}
+      .agent-title{font-size:1.9rem;margin:0 0 6px;color:#e6f7ff}
+      .agent-sub{color:#bcd7e6;margin-bottom:18px}
+      .agent-actions{display:flex;gap:12px;flex-wrap:wrap}
+      .agent-card{padding:16px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.03)}
+      .big-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;text-decoration:none;background:linear-gradient(90deg,#06b6d4,#7c3aed);color:white;font-weight:700}
+      .secondary-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#c7f0ff}
+    </style>
+  </head>
+  <body>
+    <div class="global-lang">
+      <label for="lang" class="lang-label">اللغة</label>
+      <select id="lang" class="lang-select" aria-label="Language selector">
+        <option value="ar">العربية (تونسية)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <main class="container agent-hero">
+      <h1 class="agent-title" id="agent-title">مايا — المرافقة الذكية</h1>
+      <p class="agent-sub" id="agent-sub">مرحبا! أنا مايا، موجودة باش نعاونك بمعلومات طبية موثوقة، نصايح يومية، ودعم عاطفي.</p>
+
+      <div class="agent-actions">
+        <a id="chat-btn" class="big-btn" href="chat.html">دردشة نصّية</a>
+        <a id="call-btn" class="big-btn secondary-btn" href="voice_client.html">مكالمة صوتية</a>
+      </div>
+
+      <section style="margin-top:18px">
+        <div class="agent-card">
+          <h3 id="how-title">كيف نخدم؟</h3>
+          <p id="how-desc">مايا تستخدم مصادر موثوقة ومعلومات محلية لتقديم إرشادات عامة؛ للمشاكل الطارئة، تواصلي مع مقدم الرعاية.</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const translations = {
+        ar: {
+          title: 'مايا — المرافقة الذكية',
+          sub: 'مرحبا! أنا مايا، موجودة باش نعاونك بمعلومات طبية موثوقة، نصايح يومية، ودعم عاطفي.',
+          chat: 'دردشة نصّية',
+          call: 'مكالمة صوتية',
+          howTitle: 'كيف نخدم؟',
+          howDesc: 'مايا تستخدم مصادر موثوقة ومعلومات محلية لتقديم إرشادات عامة؛ للمشاكل الطارئة، تواصلي مع مقدم الرعاية.'
+        },
+        en: {
+          title: 'Maya — Your Smart Companion',
+          sub: 'Hi! I\'m Maya. I can help with reliable information, daily tips, and emotional support.',
+          chat: 'Chat (text)',
+          call: 'Call (voice)',
+          howTitle: 'How I help',
+          howDesc: 'Maya uses trusted sources and local knowledge to give general guidance; for emergencies contact your provider.'
+        }
+      };
+
+      const agentTitle = document.getElementById('agent-title');
+      const agentSub = document.getElementById('agent-sub');
+      const chatBtn = document.getElementById('chat-btn');
+      const callBtn = document.getElementById('call-btn');
+      const howTitle = document.getElementById('how-title');
+      const howDesc = document.getElementById('how-desc');
+      const lang = document.getElementById('lang');
+
+      function applyLang(l){
+        const t = translations[l] || translations['ar'];
+        agentTitle.textContent = t.title;
+        agentSub.textContent = t.sub;
+        chatBtn.textContent = t.chat;
+        callBtn.textContent = t.call;
+        howTitle.textContent = t.howTitle;
+        howDesc.textContent = t.howDesc;
+        document.documentElement.lang = (l==='en'? 'en':'ar');
+        document.documentElement.dir = (l==='en'? 'ltr':'rtl');
+      }
+
+      // init from selector if present
+      applyLang(lang.value || 'ar');
+      lang.addEventListener('change', (e)=> applyLang(e.target.value));
+
+      // if user clicks chat, we can optionally pass a query param to open RAG context
+      chatBtn.addEventListener('click', ()=>{ /* could append ?source=agent */ });
+    </script>
+  </body>
+</html>

@@ -91,6 +91,33 @@ body {
   animation: cardIn 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+.lang-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.lang-label {
+  color: #dff4ff;
+  font-size: 0.92rem;
+}
+
+.lang-select {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+}
+
+.lang-select option {
+  color: #0d1d3a;
+}
+
 .eyebrow {
   letter-spacing: 0.24em;
   color: #d3f2ff;
@@ -149,6 +176,46 @@ body {
   display: flex;
   justify-content: flex-start;
 }
+
+html[dir='ltr'] .hero-card,
+html[dir='ltr'] .subtitle,
+html[dir='ltr'] .title,
+html[dir='ltr'] .eyebrow,
+html[dir='ltr'] .lang-row {
+  text-align: left;
+}
+
+html[dir='rtl'] .hero-card,
+html[dir='rtl'] .subtitle,
+html[dir='rtl'] .title,
+html[dir='rtl'] .eyebrow,
+html[dir='rtl'] .lang-row {
+  text-align: right;
+}
+
+html[dir='rtl'] .dynamic-line::after {
+  margin-left: 0;
+  margin-right: 6px;
+}
+
+/* Global fixed language selector (top-left) */
+.global-lang{
+  position:fixed;
+  top:18px;
+  left:18px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  z-index:9999;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+}
+
+.global-lang .lang-label{ color:#dff4ff; font-weight:600 }
+.global-lang .lang-select{ padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.06); color:#fff }
 
 .start-btn {
   position: relative;
