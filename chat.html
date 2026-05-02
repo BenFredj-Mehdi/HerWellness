@@ -52,7 +52,7 @@
         async function checkServer(){
           label.textContent = texts[langSel.value || 'ar'].checking;
           try{
-            const res = await fetch('/api/health', {cache:'no-store'});
+            const res = await fetch('/health', {cache:'no-store'});
             if(res.ok){
               statusEl.classList.remove('offline'); statusEl.classList.add('online');
               dot.style.background = '#22c55e';

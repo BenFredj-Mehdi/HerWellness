@@ -76,6 +76,7 @@ RAG_INDEX = None
 RAG_CHUNKS = None
 RAG_EMBED_MODEL = None
 RAG_ENABLED = False
+RAG_CHUNK_EMBS = None
 
 # Try to load RAG artifacts if present under RAG/rag_model
 def load_rag_artifacts(base_path: str = "RAG/rag_model"):
@@ -134,6 +135,28 @@ def load_rag_artifacts(base_path: str = "RAG/rag_model"):
         if embedding_name and not SentenceTransformer:
             logger.warning("sentence-transformers not installed; cannot load embeddings model.")
 
+    # If faiss is not available but we have chunks and an embedding model,
+    # precompute embeddings for an in-memory fallback retrieval.
+    global RAG_CHUNK_EMBS
+    if RAG_INDEX is None and RAG_CHUNKS is not None and RAG_EMBED_MODEL is not None:
+        try:
+            # Extract text for each chunk
+            texts = []
+            for c in RAG_CHUNKS:
+                if isinstance(c, dict):
+                    texts.append(c.get('text') or c.get('content') or str(c))
+                else:
+                    texts.append(str(c))
+
+            if texts:
+                logger.info("Computing in-memory embeddings for RAG chunks (fallback, may take time)...")
+                embs = RAG_EMBED_MODEL.encode(texts, convert_to_numpy=True)
+                RAG_CHUNK_EMBS = np.array(embs, dtype=np.float32)
+                logger.info(f"Computed embeddings for {len(texts)} chunks")
+        except Exception as e:
+            logger.exception(f"Failed to compute in-memory chunk embeddings: {e}")
+            RAG_CHUNK_EMBS = None
+
     RAG_ENABLED = bool(RAG_INDEX is not None and RAG_CHUNKS is not None and RAG_EMBED_MODEL is not None)
     logger.info(f"RAG enabled: {RAG_ENABLED}")
 
@@ -148,31 +171,60 @@ def retrieve_rag_context(query: str, k: int = 4) -> str:
     Returns an empty string if RAG is not enabled or on error.
     """
     global RAG_ENABLED, RAG_INDEX, RAG_CHUNKS, RAG_EMBED_MODEL
-    if not RAG_ENABLED:
+    # If RAG artifacts are not available, return empty string
+    if RAG_EMBED_MODEL is None or RAG_CHUNKS is None:
         return ""
 
     try:
-        emb = RAG_EMBED_MODEL.encode([query], convert_to_numpy=True)
-        if emb is None:
+        # Embed the query
+        q_emb = RAG_EMBED_MODEL.encode([query], convert_to_numpy=True)
+        if q_emb is None:
             return ""
-        emb = np.array(emb, dtype=np.float32)
-        # FAISS expects shape (n, dim)
-        D, I = RAG_INDEX.search(emb, k)
-        texts = []
-        for idx in I[0]:
-            if idx < 0:
-                continue
-            try:
-                chunk = RAG_CHUNKS[idx]
-                # chunk can be dict or str
-                if isinstance(chunk, dict):
-                    texts.append(chunk.get("text") or chunk.get("content") or str(chunk))
-                else:
-                    texts.append(str(chunk))
-            except Exception:
-                continue
+        q_emb = np.array(q_emb, dtype=np.float32)
 
-        # Join with separators and return
+        texts = []
+
+        # Preferred: use FAISS if available
+        if RAG_INDEX is not None:
+            try:
+                D, I = RAG_INDEX.search(q_emb, k)
+                for idx in I[0]:
+                    if idx < 0:
+                        continue
+                    try:
+                        chunk = RAG_CHUNKS[idx]
+                        if isinstance(chunk, dict):
+                            texts.append(chunk.get("text") or chunk.get("content") or str(chunk))
+                        else:
+                            texts.append(str(chunk))
+                    except Exception:
+                        continue
+            except Exception as e:
+                logger.exception(f"FAISS search failed: {e}")
+
+        # Fallback: use in-memory embeddings if FAISS not available
+        if (not texts) and RAG_CHUNK_EMBS is not None:
+            try:
+                # normalize for cosine similarity
+                q = q_emb / np.linalg.norm(q_emb, axis=1, keepdims=True)
+                embs = RAG_CHUNK_EMBS
+                embs_norm = embs / np.linalg.norm(embs, axis=1, keepdims=True)
+                # compute cosine similarities (1 x N)
+                sims = np.dot(q, embs_norm.T)[0]
+                # get top-k indices
+                topk_idx = np.argsort(sims)[-k:][::-1]
+                for idx in topk_idx:
+                    try:
+                        chunk = RAG_CHUNKS[int(idx)]
+                        if isinstance(chunk, dict):
+                            texts.append(chunk.get("text") or chunk.get("content") or str(chunk))
+                        else:
+                            texts.append(str(chunk))
+                    except Exception:
+                        continue
+            except Exception as e:
+                logger.exception(f"In-memory RAG retrieval failed: {e}")
+
         if texts:
             return "\n\n---\n\n".join(texts)
         return ""
@@ -587,6 +639,12 @@ async def websocket_endpoint(websocket: WebSocket, session_id: str):
 
 @app.get("/health")
 async def health():
+    return {"status": "ok", "time": time.time()}
+
+
+# Backwards-compatible alias for frontend code that expects /api/health
+@app.get("/api/health")
+async def api_health():
     return {"status": "ok", "time": time.time()}
 
 
