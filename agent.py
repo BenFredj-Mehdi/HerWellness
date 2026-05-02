@@ -102,7 +102,7 @@ async def lifespan(app: FastAPI):
         from langchain_community.embeddings import HuggingFaceEmbeddings
         from langchain_community.vectorstores import FAISS
         
-        model_path = "./rag_model"
+        model_path = "./RAG/rag_model"
         if os.path.exists(f"{model_path}/faiss_index"):
             embeddings = HuggingFaceEmbeddings(
                 model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
