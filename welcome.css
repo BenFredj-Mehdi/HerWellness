@@ -1,0 +1,236 @@
+:root {
+  --text: #ffffff;
+  --muted: #def2ff;
+  --card: rgba(8, 16, 35, 0.56);
+  --stroke: rgba(255, 255, 255, 0.2);
+  --glow: #6ee7ff;
+  --accent: #7c3aed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  background: url("Background/bcakground.jpg") center/cover no-repeat fixed;
+  overflow: hidden;
+}
+
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(900px 600px at 20% 15%, rgba(110, 231, 255, 0.18), transparent 70%),
+    radial-gradient(900px 700px at 80% 85%, rgba(124, 58, 237, 0.24), transparent 70%),
+    linear-gradient(120deg, rgba(4, 12, 30, 0.72), rgba(5, 16, 38, 0.72));
+  backdrop-filter: blur(1.5px);
+  z-index: -3;
+}
+
+.floating-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(2px);
+  z-index: -2;
+  animation: drift 10s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 360px;
+  height: 360px;
+  top: -80px;
+  left: -40px;
+  background: radial-gradient(circle, rgba(110, 231, 255, 0.4), rgba(110, 231, 255, 0));
+}
+
+.orb-2 {
+  width: 460px;
+  height: 460px;
+  right: -120px;
+  bottom: -90px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.36), rgba(124, 58, 237, 0));
+  animation-duration: 12.5s;
+}
+
+.orb-3 {
+  width: 260px;
+  height: 260px;
+  top: 50%;
+  right: 20%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+  animation-duration: 9s;
+}
+
+.welcome-shell {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.hero-card {
+  width: min(920px, 95vw);
+  padding: clamp(22px, 4vw, 44px);
+  border-radius: 28px;
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 25px 80px rgba(4, 8, 20, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform: translateY(24px);
+  opacity: 0;
+  animation: cardIn 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.eyebrow {
+  letter-spacing: 0.24em;
+  color: #d3f2ff;
+  font-weight: 600;
+  font-size: 0.82rem;
+  margin: 0 0 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.8rem, 4.2vw, 3.55rem);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.title span {
+  display: block;
+  margin-top: 8px;
+  background: linear-gradient(90deg, #9ee7ff, #d2bcff, #ffffff, #9ee7ff);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientFlow 6s linear infinite;
+}
+
+.subtitle {
+  margin: 18px 0 0;
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
+  line-height: 1.72;
+  color: var(--muted);
+  min-height: 122px;
+}
+
+.dynamic-line {
+  display: block;
+  margin-top: 12px;
+  min-height: 36px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.dynamic-line::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 6px;
+  background: #ffffff;
+  transform: translateY(2px);
+  animation: blink 800ms steps(2, end) infinite;
+}
+
+.cta-row {
+  margin-top: 22px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.start-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #081228;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #9ee7ff, #d9c8ff);
+  box-shadow: 0 15px 35px rgba(93, 57, 207, 0.35);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.start-btn::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.start-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 18px 42px rgba(110, 231, 255, 0.38);
+}
+
+.start-btn:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.start-btn i {
+  font-style: normal;
+  transition: transform 250ms ease;
+}
+
+.start-btn:hover i {
+  transform: translateX(5px);
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-16px) translateX(12px);
+  }
+}
+
+@keyframes cardIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gradientFlow {
+  to {
+    background-position: 260% 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    overflow: auto;
+  }
+
+  .subtitle {
+    min-height: 150px;
+  }
+}
