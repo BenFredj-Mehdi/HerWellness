@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ما بعد الولادة ورعاية الطفل</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="edge-ad edge-ad--left" href="watch.html">⌚ Smart Watch</a>
+    <a class="edge-ad edge-ad--right" href="watch.html">💜 Try it</a>
+    <div class="global-lang">
+      <label for="lang" class="lang-label">اللغة</label>
+      <select id="lang" class="lang-select" aria-label="Language selector">
+        <option value="ar">العربية (تونسية)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <main class="container post-care">
+      <h1 id="post-title">ما بعد الولادة ورعاية الطفل</h1>
+      <p id="post-lead" class="lead">دليل عملي يساعدك في التغذية، النوم، التهدئة، النمو، والسلامة، مع دعمك كأم.</p>
+
+      <section id="post-sections" class="month-items"></section>
+
+      <section class="ai-cta">
+        <h2 id="post-ai-title">تحتاجي مساعدة أكثر؟</h2>
+        <p id="post-ai-body">إذا تحبي نصيحة أكثر تخص حالتك، تنجمي تهضري مباشرة مع الخبير الذكي.</p>
+        <a class="start-btn ai-cta-btn" href="ai_agent.html" id="post-ai-btn">تحدثي مع الخبير الذكي</a>
+      </section>
+
+      <p class="meta"><a href="stage_choice.html" id="post-back">الرجوع لاختيار المرحلة</a></p>
+    </main>
+
+    <script>
+      const content = {
+        ar: {
+          title: 'ما بعد الولادة ورعاية الطفل',
+          lead: 'دليل عملي يساعدك في التغذية، النوم، التهدئة، النمو، والسلامة، مع دعمك كأم.',
+          aiTitle: 'تحتاجي مساعدة أكثر؟',
+          aiBody: 'إذا تحبي نصيحة أكثر تخص حالتك، تنجمي تهضري مباشرة مع الخبير الذكي.',
+          aiBtn: 'تحدثي مع الخبير الذكي',
+          back: 'الرجوع لاختيار المرحلة',
+          sections: [
+            {
+              h: '1) التغذية (رضاعة طبيعية أو صناعية)',
+              bullets: [
+                'في الأسابيع الأولى، الرضيع عادة يرضع مرات متكررة على مدار اليوم والليل.',
+                'راقبي علامات الشبع والجوع: مصّ اليد، البكاء المتكرر، والهدوء بعد الرضاعة.',
+                'لو رضاعة صناعية، احترمي تعليمات التحضير والنظافة بدقة.'
+              ]
+            },
+            {
+              h: '2) النوم والروتين',
+              bullets: [
+                'الرضيع ينام ساعات متفرقة، موش لازم يلتزم بروتين ثابت من البداية.',
+                'أفضل وضعية نوم آمنة: على الظهر، في سرير منفصل وثابت، بدون مخدات أو ألعاب.',
+                'حاولي تفرقي بين النهار والليل بالإضاءة الهادئة ليلاً.'
+              ]
+            },
+            {
+              h: '3) كيف تهدّي الطفل',
+              bullets: [
+                'التلامس الجسدي، الهزّ الخفيف، الصوت الهادئ، واللفّ الخفيف (حسب العمر) ينجموا يعاونوا.',
+                'راجعي الحاجات الأساسية: جوع، حفاضة، حرارة، تعب، أو غازات.',
+                'إذا حسيتي بالتعب الشديد، حطي الطفل في مكان آمن وخوذي دقيقة راحة.'
+              ]
+            },
+            {
+              h: '4) النمو والتفاعل',
+              bullets: [
+                'كلمي الطفل، غني، واعملي تواصل بصري يوميًا لتنشيط النمو اللغوي والعاطفي.',
+                'وقت قصير على البطن (tummy time) وهو صاحي وتحت المراقبة يساعد العضلات.',
+                'المتابعة الدورية مع طبيب الأطفال مهمة لمراقبة الوزن والنمو.'
+              ]
+            },
+            {
+              h: '5) السلامة في البيت',
+              bullets: [
+                'غسل اليدين قبل التعامل مع الطفل يقلل العدوى.',
+                'تأكدي من حرارة ماء الحمام وتفادي أي أشياء صغيرة قرب الطفل.',
+                'كرسي السيارة المناسب لعمر الطفل ضروري في كل تنقل.'
+              ]
+            },
+            {
+              h: '6) دعم الأم بعد الولادة',
+              bullets: [
+                'الراحة، التغذية الجيدة، وشرب الماء مهمين للتعافي.',
+                'التغيرات المزاجية الخفيفة شائعة، أما الحزن القوي أو المستمر يستحق متابعة طبية.',
+                'اطلبي المساندة من العائلة أو الشريك وما تتحمليش كل شيء وحدك.'
+              ]
+            },
+            {
+              h: 'متى لازم تتصلي بالطبيب بسرعة؟',
+              bullets: [
+                'حرارة عند الرضيع، صعوبة تنفس، رفض رضاعة مستمر، خمول واضح، أو بكاء غير معتاد ومطوّل.',
+                'عند الأم: نزيف شديد، ألم قوي، حرارة، أو أعراض نفسية شديدة (قلق/حزن متواصل).'
+              ]
+            }
+          ]
+        },
+        en: {
+          title: 'Post Pregnancy & Baby Care',
+          lead: 'A practical guide for feeding, sleep, soothing, growth, safety, and caregiver support.',
+          aiTitle: 'Need more support?',
+          aiBody: 'If you want tailored advice for your situation, talk directly with the AI expert.',
+          aiBtn: 'Talk to the AI expert',
+          back: 'Back to stage selection',
+          sections: [
+            {
+              h: '1) Feeding (breastfeeding or formula)',
+              bullets: [
+                'In early weeks, newborns usually feed frequently day and night.',
+                'Watch hunger/satiety cues: rooting, hand-to-mouth, and settling after feeding.',
+                'If using formula, follow preparation and hygiene instructions carefully.'
+              ]
+            },
+            {
+              h: '2) Sleep and routine',
+              bullets: [
+                'Newborn sleep is fragmented; strict routine is not expected at first.',
+                'Safe sleep: baby on back, separate firm sleep surface, no loose bedding or toys.',
+                'Support day/night rhythm with brighter daytime and calmer nighttime cues.'
+              ]
+            },
+            {
+              h: '3) Soothing your baby',
+              bullets: [
+                'Skin contact, gentle rocking, calm voice, and age-appropriate swaddling can help.',
+                'Check basics first: hunger, diaper, temperature, tiredness, gas.',
+                'If overwhelmed, place baby safely and take a short pause before returning.'
+              ]
+            },
+            {
+              h: '4) Growth and interaction',
+              bullets: [
+                'Talk, sing, and make eye contact daily to support language and bonding.',
+                'Short supervised tummy time while awake supports muscle development.',
+                'Regular pediatric follow-up is important for growth monitoring.'
+              ]
+            },
+            {
+              h: '5) Home safety',
+              bullets: [
+                'Hand hygiene before handling baby helps reduce infections.',
+                'Check bath water temperature and keep small objects out of reach.',
+                'Use an age-appropriate car seat on every ride.'
+              ]
+            },
+            {
+              h: '6) Maternal recovery and support',
+              bullets: [
+                'Rest, hydration, and balanced meals support postpartum recovery.',
+                'Mild mood changes can happen; persistent severe sadness/anxiety needs medical support.',
+                'Ask for help from partner/family—shared care is protective.'
+              ]
+            },
+            {
+              h: 'When to seek urgent medical advice',
+              bullets: [
+                'Baby: fever, breathing difficulty, poor feeding, unusual lethargy, persistent inconsolable crying.',
+                'Mother: heavy bleeding, severe pain, fever, or severe mental health symptoms.'
+              ]
+            }
+          ]
+        }
+      };
+
+      function render(lang) {
+        const v = content[lang] || content.ar;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+        document.getElementById('post-title').textContent = v.title;
+        document.getElementById('post-lead').textContent = v.lead;
+        document.getElementById('post-ai-title').textContent = v.aiTitle;
+        document.getElementById('post-ai-body').textContent = v.aiBody;
+        document.getElementById('post-ai-btn').textContent = v.aiBtn;
+        document.getElementById('post-back').textContent = v.back;
+
+        const sections = document.getElementById('post-sections');
+        sections.innerHTML = '';
+        v.sections.forEach((s) => {
+          const article = document.createElement('article');
+          article.className = 'problem problem--month';
+          const list = s.bullets.map((b) => `<li>${b}</li>`).join('');
+          article.innerHTML = `<h3>${s.h}</h3><ul class="post-list">${list}</ul>`;
+          sections.appendChild(article);
+        });
+      }
+
+      const langSelector = document.getElementById('lang');
+      const saved = localStorage.getItem('language') || 'ar';
+      langSelector.value = saved;
+      render(saved);
+
+      langSelector.addEventListener('change', () => {
+        localStorage.setItem('language', langSelector.value);
+        render(langSelector.value);
+      });
+    </script>
+  </body>
+</html>

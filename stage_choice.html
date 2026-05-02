@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>اختاري المرحلة</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="edge-ad edge-ad--left" href="watch.html">⌚ Smart Watch</a>
+    <a class="edge-ad edge-ad--right" href="watch.html">🔥 Offer</a>
+    <div class="global-lang">
+      <label for="lang" class="lang-label">اللغة</label>
+      <select id="lang" class="lang-select" aria-label="Language selector">
+        <option value="ar">العربية (تونسية)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <main class="container stage-choice">
+      <h1 id="stage-title">اختاري المرحلة</h1>
+      <p id="stage-lead" class="lead">قبل ما نبدأو، قوليلنا إنتِ في أي مرحلة:</p>
+
+      <section class="stage-grid" aria-label="اختيار المرحلة">
+        <a class="month-card" href="guidance.html">
+          <span class="month-card__badge" id="before-badge">قبل الولادة</span>
+          <h2 id="before-title">Pregnancy Guidance</h2>
+          <p id="before-desc">اختاري شهر الحمل وشوفي نصائح حسب وضعك.</p>
+          <span class="month-card__cta" id="before-cta">ادخلي لتوجيهات الحمل →</span>
+        </a>
+
+        <a class="month-card" href="post_pregnancy.html">
+          <span class="month-card__badge" id="after-badge">بعد الولادة</span>
+          <h2 id="after-title">Post Pregnancy & Baby Care</h2>
+          <p id="after-desc">نصائح عملية للتغذية، النوم، التهدئة، النمو، ودعم الأم.</p>
+          <span class="month-card__cta" id="after-cta">ادخلي لإرشادات ما بعد الولادة →</span>
+        </a>
+      </section>
+
+      <p class="meta"><a href="index.html" id="back-home">الرجوع للترحيب</a></p>
+    </main>
+
+    <script>
+      const ui = {
+        ar: {
+          title: 'اختاري المرحلة',
+          lead: 'قبل ما نبدأو، قوليلنا إنتِ في أي مرحلة:',
+          beforeBadge: 'قبل الولادة',
+          beforeTitle: 'إرشادات الحمل',
+          beforeDesc: 'اختاري شهر الحمل وشوفي نصائح حسب وضعك.',
+          beforeCta: 'ادخلي لتوجيهات الحمل →',
+          afterBadge: 'بعد الولادة',
+          afterTitle: 'ما بعد الولادة ورعاية الطفل',
+          afterDesc: 'نصائح عملية للتغذية، النوم، التهدئة، النمو، ودعم الأم.',
+          afterCta: 'ادخلي لإرشادات ما بعد الولادة →',
+          back: 'الرجوع للترحيب'
+        },
+        en: {
+          title: 'Choose your stage',
+          lead: 'Before we continue, tell us where you are in your journey:',
+          beforeBadge: 'Before birth',
+          beforeTitle: 'Pregnancy guidance',
+          beforeDesc: 'Choose your pregnancy month and view tailored tips.',
+          beforeCta: 'Open pregnancy guidance →',
+          afterBadge: 'Post pregnancy',
+          afterTitle: 'Post pregnancy & baby care',
+          afterDesc: 'Practical advice for feeding, sleep, soothing, growth, and caregiver support.',
+          afterCta: 'Open post-pregnancy guidance →',
+          back: 'Back to welcome'
+        }
+      };
+
+      function applyLang(lang) {
+        const v = ui[lang] || ui.ar;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+        document.getElementById('stage-title').textContent = v.title;
+        document.getElementById('stage-lead').textContent = v.lead;
+        document.getElementById('before-badge').textContent = v.beforeBadge;
+        document.getElementById('before-title').textContent = v.beforeTitle;
+        document.getElementById('before-desc').textContent = v.beforeDesc;
+        document.getElementById('before-cta').textContent = v.beforeCta;
+        document.getElementById('after-badge').textContent = v.afterBadge;
+        document.getElementById('after-title').textContent = v.afterTitle;
+        document.getElementById('after-desc').textContent = v.afterDesc;
+        document.getElementById('after-cta').textContent = v.afterCta;
+        document.getElementById('back-home').textContent = v.back;
+      }
+
+      const selector = document.getElementById('lang');
+      const savedLang = localStorage.getItem('language') || 'ar';
+      selector.value = savedLang;
+      applyLang(savedLang);
+
+      selector.addEventListener('change', () => {
+        localStorage.setItem('language', selector.value);
+        applyLang(selector.value);
+      });
+    </script>
+  </body>
+</html>

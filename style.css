@@ -23,6 +23,60 @@ body{
 	box-shadow:0 20px 50px rgba(2,6,23,0.6);
 }
 
+.month-chooser,
+.month-page,
+.ai-chooser{position:relative;overflow:hidden}
+
+.month-grid{
+	display:grid;
+	grid-template-columns:repeat(3,minmax(0,1fr));
+	gap:16px;
+	margin-top:22px;
+}
+
+.stage-grid{
+	display:grid;
+	grid-template-columns:repeat(2,minmax(0,1fr));
+	gap:18px;
+	margin-top:22px;
+}
+
+.month-card{
+	text-decoration:none;color:#e9fbff;min-height:170px;padding:20px;border-radius:18px;
+	background:linear-gradient(160deg, rgba(6,182,212,0.18), rgba(124,58,237,0.12));
+	border:1px solid rgba(255,255,255,0.12);box-shadow:0 15px 35px rgba(2,6,23,0.35);
+	display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.month-card:hover{transform:translateY(-4px);box-shadow:0 20px 45px rgba(2,6,23,0.45);border-color:rgba(255,255,255,0.22)}
+.month-card h2{margin:10px 0 6px;font-size:1.35rem;color:#fff}
+.month-card p{margin:0;color:#d6edf7;line-height:1.6}
+.month-card__badge{display:inline-flex;align-self:flex-start;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.12);font-weight:700;font-size:.9rem}
+.month-card__cta{margin-top:14px;font-weight:700;color:#fff}
+
+.month-page .meta,
+.ai-chooser .meta{margin-top:20px}
+.stage-choice .meta,
+.post-care .meta{margin-top:20px}
+.month-hero{padding:8px 0 4px}
+.month-hero h1{margin:8px 0 8px;color:#e6f7ff}
+.month-items{display:grid;grid-template-columns:1fr;gap:14px;margin:20px 0}
+.problem--month{border-radius:16px}
+.ai-cta{margin-top:20px;padding:20px;border-radius:16px;background:linear-gradient(160deg, rgba(6,182,212,0.12), rgba(124,58,237,0.10));border:1px solid rgba(255,255,255,0.08)}
+.ai-cta h2{margin-top:0;color:#fff}
+.ai-cta p{color:#eaf7ff}
+.ai-cta a{color:#ffffff}
+.ai-cta-btn{display:inline-flex;margin-top:10px;text-decoration:none}
+
+.ai-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+.option-card{display:block;text-decoration:none;padding:22px;border-radius:18px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:#e6f7ff;box-shadow:0 14px 34px rgba(2,6,23,0.32)}
+.option-card h2{margin-top:0;color:#fff}
+.option-card--disabled{opacity:.72}
+.option-card--disabled button{cursor:not-allowed;opacity:.75}
+.option-link{display:inline-block;margin-top:12px;font-weight:700;color:#fff}
+
+.post-list{margin:10px 0 0;padding-inline-start:18px;color:#eaf7ff;line-height:1.8}
+.post-list li{margin:6px 0}
+
 h1{margin:0 0 6px;font-weight:700;display:flex;align-items:center;gap:12px;color:#e6f7ff}
 h1#site-title::before{content:'';width:46px;height:46px;background:linear-gradient(135deg,#09c6f9,#6d28d9);border-radius:10px;display:inline-block;box-shadow:0 6px 18px rgba(109,40,217,0.25);transform:translateY(-2px)}
 .lead{color:#bcd7e6;margin-top:6px}
@@ -32,6 +86,9 @@ select{padding:10px;border:1px solid rgba(255,255,255,0.06);border-radius:10px;b
 select option{color:#072033}
 button{background:linear-gradient(90deg,#06b6d4,#7c3aed);color:#fff;border:none;padding:10px 16px;border-radius:10px;cursor:pointer;box-shadow:0 10px 30px rgba(7,26,48,0.6)}
 button:hover{transform:translateY(-1px)}
+
+.start-btn{background:linear-gradient(135deg,#ff6b9d 0%,#c44569 100%);color:#fff;padding:14px 32px;border-radius:8px;font-weight:bold;text-decoration:none;display:inline-block;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(196,69,105,0.4);border:none;cursor:pointer;font-size:16px;font-family:inherit}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(196,69,105,0.55);filter:brightness(1.1)}
 
 #results{margin-top:20px}
 .problem{border-left:4px solid rgba(255,255,255,0.12);padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;margin-bottom:14px;color:#e9fbff}
@@ -44,10 +101,64 @@ button:hover{transform:translateY(-1px)}
 /* Chatbot placeholder textarea styling */
 textarea{border:1px solid #e6f0f6;padding:10px;border-radius:6px;font-family:inherit}
 
+/* Edge watch ad */
+.edge-ad{
+	position:fixed;
+	top:50%;
+	transform:translateY(-50%);
+	z-index:9998;
+	text-decoration:none;
+	color:#fff;
+	font-weight:800;
+	letter-spacing:.3px;
+	padding:14px 10px;
+	border-radius:14px;
+	border:1px solid rgba(255,255,255,0.28);
+	background:linear-gradient(180deg,#ff4fd8,#7c3aed,#06b6d4);
+	box-shadow:0 14px 36px rgba(2,6,23,0.55);
+	writing-mode:vertical-rl;
+	text-orientation:mixed;
+	animation:edgePulse 2.1s ease-in-out infinite;
+}
+.edge-ad--left{left:8px}
+.edge-ad--right{right:8px}
+.edge-ad:hover{filter:brightness(1.08)}
+
+@keyframes edgePulse{
+	0%,100%{transform:translateY(-50%) scale(1)}
+	50%{transform:translateY(-50%) scale(1.05)}
+}
+
+/* Watch page */
+.watch-page{max-width:1060px}
+.watch-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;direction:ltr}
+.watch-hero h1{margin-bottom:8px}
+.watch-eyebrow{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.2);color:#ffffff;font-weight:800;border:1px solid rgba(255,255,255,.35);text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.watch-sub{color:#eaf7ff;line-height:1.8}
+.watch-gallery{display:grid;gap:12px}
+.watch-gallery img{width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.15);box-shadow:0 14px 30px rgba(2,6,23,.45)}
+.benefits-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+.benefit-card{padding:16px;border-radius:14px;background:linear-gradient(160deg, rgba(6,182,212,0.14), rgba(124,58,237,0.12));border:1px solid rgba(255,255,255,.12);color:#e9fbff}
+.benefit-card h3{margin:0 0 8px;color:#fff}
+.watch-cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+
+.order-page{max-width:760px}
+.order-form{margin-top:18px;display:grid;gap:12px}
+.order-form label{color:#dff5ff;font-weight:700}
+.order-form input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff}
+.order-note{font-size:.95rem;color:#bde6ff}
+.order-success{margin-top:14px;padding:12px;border-radius:10px;border:1px solid rgba(52,211,153,.5);background:rgba(16,185,129,.15);color:#d1fae5;display:none}
+
 @media (max-width:520px){
 	.container{padding:18px}
 	form{flex-direction:column;align-items:stretch}
 	button{width:100%}
+	.month-grid,
+	.ai-options,
+	.stage-grid,
+	.benefits-grid,
+	.watch-hero{grid-template-columns:1fr}
+	.edge-ad{display:none}
 }
 
 /* page background using the generated SVG */

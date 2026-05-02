@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Smart Watch للأم والطفل</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="edge-ad edge-ad--left" href="watch.html">⌚ Smart Watch</a>
+    <a class="edge-ad edge-ad--right" href="watch.html">🔥 Offer</a>
+    <div class="global-lang">
+      <label for="lang" class="lang-label">اللغة</label>
+      <select id="lang" class="lang-select" aria-label="Language selector">
+        <option value="ar">العربية (تونسية)</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <main class="container watch-page">
+      <section class="watch-hero">
+        <div>
+          <p class="eyebrow watch-eyebrow">SMART CARE • EVERYWHERE</p>
+          <h1 id="watch-title">الساعة الذكية اللي ترافقك وين ما تكوني</h1>
+          <p class="watch-sub" id="watch-sub">
+            من الحمل إلى ما بعد الولادة، الساعة تعاونك تتابعي صحتك وصحة صغيرك بإشعارات ذكية، GPS مدمج، وتنبيهات في الوقت الصحيح.
+          </p>
+          <div class="watch-cta">
+            <button class="start-btn" onclick="location.href='watch_order.html'" id="watch-buy">Buy Now — 50% OFF</button>
+            <a class="button-link" href="stage_choice.html" id="watch-back">الرجوع</a>
+          </div>
+        </div>
+
+        <div class="watch-gallery" aria-label="watch images">
+          <img src="Background/010-02891-01_06_lily2active_hr_silverpurple_front-right_0029_sleep-chart.png" alt="Smart watch sleep and health preview" />
+          <img src="Background/39696-spotlight-component-add-some-movement-womens-campaign.png" alt="Women smartwatch lifestyle" />
+        </div>
+      </section>
+
+      <section class="benefits-grid" id="benefits-grid">
+        <article class="benefit-card">
+          <h3>GPS مدمج</h3>
+          <p>ما تخافيش على المسافة: المتابعة تكون معاك في كل بلاصة، داخل الدار ولا برا.</p>
+        </article>
+        <article class="benefit-card">
+          <h3>مراقبة نبض القلب</h3>
+          <p>تتبع لحظي للنبض يساعد على ملاحظة تغيّرات مبكّرة والتصرف بسرعة وقت الطوارئ.</p>
+        </article>
+        <article class="benefit-card">
+          <h3>تذكير بالنشاط</h3>
+          <p>تنبيهات ذكية للحركة والرياضة الخفيفة حسب يومك ووضعك الصحي.</p>
+        </article>
+        <article class="benefit-card">
+          <h3>تذكير برضاعة الطفل</h3>
+          <p>تنبيهات منظمة لأوقات الرضاعة، تغيير الحفاضة، والمتابعة اليومية للروتين.</p>
+        </article>
+        <article class="benefit-card">
+          <h3>تتبع النوم</h3>
+          <p>تحليل جودة النوم للأم، مع نصائح لتحسين الراحة والتعافي.</p>
+        </article>
+        <article class="benefit-card">
+          <h3>تنبيهات شرب الماء والأدوية</h3>
+          <p>إشعارات في الوقت المناسب للترطيب، الفيتامينات، أو أي دواء موصوف.</p>
+        </article>
+        <article class="benefit-card">
+          <h3>زر SOS</h3>
+          <p>في الحالات الحرجة، إرسال إشارة سريعة مع الموقع لجهة الاتصال الموثوقة.</p>
+        </article>
+        <article class="benefit-card">
+          <h3>مقاومة للماء + بطارية طويلة</h3>
+          <p>تنفعك كل يوم بدون قلق، حتى مع الاستعمال المتكرر طول النهار.</p>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const copy = {
+        ar: {
+          title: 'الساعة الذكية اللي ترافقك وين ما تكوني',
+          sub: 'من الحمل إلى ما بعد الولادة، الساعة تعاونك تتابعي صحتك وصحة صغيرك بإشعارات ذكية، GPS مدمج، وتنبيهات في الوقت الصحيح.',
+          buy: 'اشتري الآن — تخفيض 50%',
+          back: 'الرجوع'
+        },
+        en: {
+          title: 'The smart watch that follows you everywhere',
+          sub: 'From pregnancy to postpartum, this watch supports your health and baby-care routine with smart reminders, built-in GPS, and real-time wellness tracking.',
+          buy: 'Buy Now — 50% OFF',
+          back: 'Back'
+        }
+      };
+
+      function applyLang(lang) {
+        const v = copy[lang] || copy.ar;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+        document.getElementById('watch-title').textContent = v.title;
+        document.getElementById('watch-sub').textContent = v.sub;
+        document.getElementById('watch-buy').textContent = v.buy;
+        document.getElementById('watch-back').textContent = v.back;
+      }
+
+      const langSelector = document.getElementById('lang');
+      const saved = localStorage.getItem('language') || 'ar';
+      langSelector.value = saved;
+      applyLang(saved);
+      langSelector.addEventListener('change', () => {
+        localStorage.setItem('language', langSelector.value);
+        applyLang(langSelector.value);
+      });
+    </script>
+  </body>
+</html>

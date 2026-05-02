@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>طلب الساعة — تخفيض 50%</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="edge-ad edge-ad--left" href="watch.html">⌚ Smart Watch</a>
+    <a class="edge-ad edge-ad--right" href="watch.html">🔥 Offer</a>
+    <main class="container order-page">
+      <h1 id="order-title">أكملي الطلب — تخفيض 50%</h1>
+      <p id="order-lead" class="lead">عمّرِي المعلومات التالية، وفريقنا يتواصل معاك لاحقًا لإجراءات الاستلام.</p>
+
+      <form id="order-form" class="order-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="d793a97d-ed75-4977-9e94-e06428782cfc" />
+        <input type="hidden" name="subject" value="New Watch Order (50% OFF)" />
+        <input type="hidden" name="from_name" value="HerWellness Watch Order" />
+        <div>
+          <label for="name" id="label-name">الاسم الكامل</label>
+          <input id="name" name="name" type="text" required />
+        </div>
+        <div>
+          <label for="email" id="label-email">البريد الإلكتروني</label>
+          <input id="email" name="email" type="email" required />
+        </div>
+        <div>
+          <label for="phone" id="label-phone">رقم الهاتف</label>
+          <input id="phone" name="phone" type="tel" required />
+        </div>
+        <div>
+          <label for="message" id="label-message">الرسالة</label>
+          <textarea id="message" name="message" rows="4" required>أرغب في الاستفادة من عرض 50% وطلب الساعة الذكية. الرجاء التواصل معي.</textarea>
+        </div>
+
+        <p class="order-note" id="order-note">* سنستعمل هذه المعلومات فقط للتواصل بخصوص استلام الساعة.</p>
+
+        <div class="watch-cta">
+          <button type="submit" id="submit-btn">تأكيد الطلب</button>
+          <a class="button-link" href="watch.html" id="back-watch">الرجوع لصفحة الساعة</a>
+        </div>
+      </form>
+
+      <div id="order-success" class="order-success">
+        ✅ تم تسجيل طلبك بنجاح. سنتواصل معك قريبًا لتأكيد إجراءات الاستلام.
+      </div>
+    </main>
+
+    <script>
+      const copy = {
+        ar: {
+          title: 'أكملي الطلب — تخفيض 50%',
+          lead: 'عمّرِي المعلومات التالية، وفريقنا يتواصل معاك لاحقًا لإجراءات الاستلام.',
+          name: 'الاسم الكامل',
+          email: 'البريد الإلكتروني',
+          phone: 'رقم الهاتف',
+          message: 'الرسالة',
+          note: '* سنستعمل هذه المعلومات فقط للتواصل بخصوص استلام الساعة.',
+          submit: 'تأكيد الطلب',
+          back: 'الرجوع لصفحة الساعة',
+          ok: '✅ تم تسجيل طلبك بنجاح. سنتواصل معك قريبًا لتأكيد إجراءات الاستلام.'
+        },
+        en: {
+          title: 'Complete your order — 50% OFF',
+          lead: 'Fill this short form and our team will contact you with delivery steps.',
+          name: 'Full name',
+          email: 'Email',
+          phone: 'Phone number',
+          message: 'Message',
+          note: '* We will only use this information to contact you about watch delivery.',
+          submit: 'Confirm order',
+          back: 'Back to watch page',
+          ok: '✅ Your request has been recorded. We will contact you shortly with the next steps.'
+        }
+      };
+
+      function applyLang(lang) {
+        const v = copy[lang] || copy.ar;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+        document.getElementById('order-title').textContent = v.title;
+        document.getElementById('order-lead').textContent = v.lead;
+        document.getElementById('label-name').textContent = v.name;
+        document.getElementById('label-email').textContent = v.email;
+        document.getElementById('label-phone').textContent = v.phone;
+        document.getElementById('label-message').textContent = v.message;
+        document.getElementById('order-note').textContent = v.note;
+        document.getElementById('submit-btn').textContent = v.submit;
+        document.getElementById('back-watch').textContent = v.back;
+        document.getElementById('order-success').textContent = v.ok;
+      }
+
+      const lang = localStorage.getItem('language') || 'ar';
+      applyLang(lang);
+    </script>
+  </body>
+</html>
