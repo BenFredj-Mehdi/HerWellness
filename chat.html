@@ -1,76 +1,188 @@
 <!doctype html>
-<html>
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>دردشة (معطلة)</title>
+    <title>HerWellness Chat</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      .chat-shell { max-width: 920px; margin: 0 auto; }
+      .chat-card {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 16px;
+      }
+      .server-status {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.05);
+        color: #e6f7ff;
+        cursor: pointer;
+        user-select: none;
+      }
+      .server-status .dot { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; }
+      .messages {
+        height: 56vh;
+        min-height: 360px;
+        overflow: auto;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        padding: 12px;
+        background: rgba(255,255,255,0.03);
+      }
+      .msg { padding: 10px 12px; border-radius: 10px; margin: 8px 0; max-width: 85%; line-height: 1.6; white-space: pre-wrap; }
+      .msg-user { margin-left: auto; background: linear-gradient(90deg,#06b6d4,#7c3aed); color: #fff; }
+      .msg-bot { margin-right: auto; background: rgba(255,255,255,0.12); color: #e6f7ff; }
+      .meta { font-size: 12px; opacity: 0.9; margin-top: 6px; }
+      .sources { margin-top: 8px; font-size: 12px; opacity: 0.95; }
+      .composer { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; margin-top: 12px; }
+      .composer input {
+        width: 100%; padding: 10px 12px; border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.06); color: #e6f7ff;
+      }
+      .composer button { border: none; border-radius: 10px; padding: 10px 14px; cursor: pointer; }
+      .send-btn { background: linear-gradient(90deg,#06b6d4,#7c3aed); color: #fff; }
+      .reset-btn { background: rgba(255,255,255,0.14); color: #e6f7ff; }
+    </style>
   </head>
   <body>
-    <main class="container">
-      <h1>دردشة (معروضة كمثال ثابت)</h1>
-      <p class="lead">الاتصال بالخادم مُعطل. هذا مثال للواجهة بدون أي وظائف خلفية.</p>
-      <p><a href="index.html">العودة للصفحة الرئيسية</a></p>
+    <div id="server-status" class="server-status" title="تحقق من حالة الخادم">
+      <span class="dot"></span>
+      <span class="label">جارِ التحقق...</span>
+    </div>
+
+    <main class="chat-shell">
+      <section class="chat-card">
+        <h1>💬 Maya — دردشة HerWellness</h1>
+        <p class="lead">اسألي Maya بالدارجة التونسية، وهي تجاوبك بنصائح عامة.</p>
+
+        <div id="messages" class="messages" aria-live="polite"></div>
+
+        <div class="composer">
+          <input id="input" type="text" placeholder="اكتب سؤالك هنا..." />
+          <button id="send" class="send-btn">إرسال</button>
+          <button id="reset" class="reset-btn">مسح</button>
+        </div>
+
+        <p class="meta"><a href="index.html">العودة للصفحة الرئيسية</a></p>
+      </section>
     </main>
-  </body>
-</html>
+
     <script>
-      // Server status indicator
-      (function(){
-        const statusEl = document.getElementById('server-status');
-        const dot = statusEl.querySelector('.dot');
-        const label = statusEl.querySelector('.label');
-        const langSel = document.getElementById('lang');
-        const texts = {
-          ar: { online: 'متصل', offline: 'غير متصل', checking: 'جارِ التحقق...' },
-          en: { online: 'Online', offline: 'Offline', checking: 'Checking...' }
-        };
-
-        async function checkServer(){
-          label.textContent = texts[langSel.value || 'ar'].checking;
-          try{
-            const res = await fetch('/health', {cache:'no-store'});
-            if(res.ok){
-              statusEl.classList.remove('offline'); statusEl.classList.add('online');
-              dot.style.background = '#22c55e';
-              label.textContent = texts[langSel.value || 'ar'].online;
-            }else{
-              statusEl.classList.remove('online'); statusEl.classList.add('offline');
-              dot.style.background = '#ef4444';
-              label.textContent = texts[langSel.value || 'ar'].offline;
-            }
-          }catch(err){
-            statusEl.classList.remove('online'); statusEl.classList.add('offline');
-            dot.style.background = '#ef4444';
-            label.textContent = texts[langSel.value || 'ar'].offline;
-          }
-        }
-
-        // initial check and interval
-        checkServer();
-        const poll = setInterval(checkServer, 5000);
-
-        // manual retry when clicking the badge
-        statusEl.addEventListener('click', ()=>{ checkServer(); });
-
-        // update label on language change
-        langSel.addEventListener('change', ()=>{ checkServer(); });
-      })();
-
+      const statusEl = document.getElementById('server-status');
+      const dot = statusEl.querySelector('.dot');
+      const label = statusEl.querySelector('.label');
       const messages = document.getElementById('messages');
       const input = document.getElementById('input');
+      const sendBtn = document.getElementById('send');
+      const resetBtn = document.getElementById('reset');
+      const API_BASE = location.protocol.startsWith('http')
+        ? `${location.protocol}//${location.hostname || 'localhost'}:8082`
+        : 'http://localhost:8082';
+      const sessionKey = 'herwellness_session_id';
+      const sessionId = localStorage.getItem(sessionKey) || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()));
+      localStorage.setItem(sessionKey, sessionId);
 
-      document.getElementById('send').addEventListener('click', ()=>{
-        const txt = input.value.trim(); if(!txt) return;
-        const u = document.createElement('div'); u.className='msg-user'; u.textContent='أنت: '+txt; messages.appendChild(u);
-        input.value='';
-        // Static demo: no backend. Show a friendly placeholder reply.
-        const b = document.createElement('div'); b.className='msg-bot'; b.textContent='المساعد: هذا عرض تجريبي بدون اتصال بالخادم.';
-        messages.appendChild(b);
+      function appendMessage(kind, text, extraHtml) {
+        const node = document.createElement('div');
+        node.className = 'msg ' + (kind === 'user' ? 'msg-user' : 'msg-bot');
+        node.textContent = text;
+        if (extraHtml) {
+          const extra = document.createElement('div');
+          extra.className = 'sources';
+          extra.innerHTML = extraHtml;
+          node.appendChild(extra);
+        }
+        messages.appendChild(node);
         messages.scrollTop = messages.scrollHeight;
+      }
+
+      function setStatus(online, text) {
+        dot.style.background = online ? '#22c55e' : '#ef4444';
+        label.textContent = text;
+      }
+
+      async function checkServer() {
+        setStatus(false, 'جارِ التحقق...');
+        try {
+          const r = await fetch(`${API_BASE}/health`, { cache: 'no-store' });
+          if (r.ok) {
+            setStatus(true, 'متصل');
+          } else {
+            setStatus(false, 'غير متصل');
+          }
+        } catch (_) {
+          setStatus(false, 'غير متصل');
+        }
+      }
+
+      function renderSources(sources) {
+        if (!Array.isArray(sources) || !sources.length) return '';
+        const items = sources.map((s, i) => {
+          const score = typeof s.score === 'number' ? ` (${Math.round(s.score * 100)}%)` : '';
+          return `<li>${i + 1}. ${String(s.text_snippet || '').replace(/</g, '&lt;')}${score}</li>`;
+        }).join('');
+        return `<strong>مصادر:</strong><ul>${items}</ul>`;
+      }
+
+      async function sendMessage() {
+        const text = input.value.trim();
+        if (!text) return;
+        appendMessage('user', text);
+        input.value = '';
+        sendBtn.disabled = true;
+
+        try {
+          const response = await fetch(`${API_BASE}/api/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              session_id: sessionId,
+              text,
+              language: 'ar-TN',
+              metadata: { source: 'chat.html' }
+            })
+          });
+
+          if (!response.ok) {
+            const errText = await response.text();
+            appendMessage('bot', `صار خطأ في الخادم (${response.status}).`, `<em>${errText.replace(/</g, '&lt;')}</em>`);
+            return;
+          }
+
+          const data = await response.json();
+          appendMessage('bot', data.reply || 'ما صار حتى رد.', renderSources(data.sources));
+        } catch (err) {
+          appendMessage('bot', 'ما نجمناش نتصلو بالخادم. تأكدي إن `agent.py` خدام.');
+        } finally {
+          sendBtn.disabled = false;
+          input.focus();
+        }
+      }
+
+      sendBtn.addEventListener('click', sendMessage);
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') sendMessage();
       });
 
-      document.getElementById('reset').addEventListener('click', ()=>{ messages.innerHTML=''; });
+      resetBtn.addEventListener('click', () => {
+        messages.innerHTML = '';
+        appendMessage('bot', 'تم مسح المحادثة محلياً.');
+      });
+
+      statusEl.addEventListener('click', checkServer);
+      checkServer();
+      setInterval(checkServer, 7000);
+      appendMessage('bot', 'السلام عليكم 🌸 أنا Maya. شنوّة تحبّي تعرفي اليوم؟');
     </script>
   </body>
 </html>

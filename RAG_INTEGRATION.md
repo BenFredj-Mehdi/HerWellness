@@ -48,21 +48,21 @@ python agent.py
 Or with auto-reload during development:
 
 ```bash
-uvicorn agent:app --host 0.0.0.0 --port 8000 --reload
+uvicorn agent:app --host 0.0.0.0 --port 8082 --reload
 ```
 
 ## Testing
 
 ### Chat Endpoint
 
-Open http://localhost:8000/chat.html and type a question (e.g., "شنوّة الغثيان في الشهر الأول؟").
+Open http://localhost:8082/chat.html and type a question (e.g., "شنوّة الغثيان في الشهر الأول؟").
 
 The response will include relevant information retrieved from the pregnancy PDF.
 
 ### Curl Example (Text Chat)
 
 ```bash
-curl -X POST http://localhost:8000/api/chat \
+curl -X POST http://localhost:8082/api/chat \
   -H "Content-Type: application/json" \
   -d '{
     "session_id": "test_user",
@@ -81,7 +81,7 @@ Expected output:
 ### Health Check
 
 ```bash
-curl http://localhost:8000/health
+curl http://localhost:8082/health
 ```
 
 ## Logging

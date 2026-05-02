@@ -24,7 +24,7 @@ GROQ_API_KEY=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
 LIVEKIT_URL=
 LIVEKIT_API_KEY=
 LIVEKIT_API_SECRET=
-PORT=8000
+PORT=8082
 ```
 
 **IMPORTANT**: Never commit `.env` to git. It's in `.gitignore` for a reason.
@@ -47,25 +47,25 @@ python -c "import groq; print(groq.__version__)"
 ### 3. Start the FastAPI server
 
 ```powershell
-uvicorn agent:app --host 0.0.0.0 --port 8000
+uvicorn agent:app --host 0.0.0.0 --port 8082
 ```
 
 You should see:
 ```
-INFO:     Uvicorn running on http://0.0.0.0:8000
+INFO:     Uvicorn running on http://0.0.0.0:8082
 INFO:voice_agent:Groq client initialized successfully.
 ```
 
 ### 4. Test the chatbot
 
 Open in your browser:
-- **Text chat (supports Arabizi)**: http://localhost:8000/chat.html
-- **Simple chat**: http://localhost:8000/chatbot.html
-- **Voice demo**: http://localhost:8000/voice_client.html
+- **Text chat (supports Arabizi)**: http://localhost:8082/chat.html
+- **Simple chat**: http://localhost:8082/chatbot.html
+- **Voice demo**: http://localhost:8082/voice_client.html
 
 ### Example Test Queries
 
-**Text chat** (try these in http://localhost:8000/chat.html):
+**Text chat** (try these in http://localhost:8082/chat.html):
 
 1. `Salem, ena 7ebla f chhar lowel kifech naamel` (Arabizi)
    - Groq LLM will recognize and respond in Tunisian Derja

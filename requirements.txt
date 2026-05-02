@@ -1,2 +1,12 @@
-# Static frontend only — no backend Python dependencies required.
-# If you later re-enable a Python backend, restore appropriate requirements.
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-dotenv>=1.0.1
+pydantic>=2.8.2
+
+# LLM
+langchain-groq>=0.1.9
+
+# RAG
+langchain-community>=0.2.12
+sentence-transformers>=3.0.1
+faiss-cpu>=1.8.0.post1

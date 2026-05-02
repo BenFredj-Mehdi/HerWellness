@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
@@ -84,7 +85,9 @@ async def lifespan(app: FastAPI):
     try:
         from langchain_groq import ChatGroq
         
-        GROQ_API_KEY = os.getenv("GROQ_API_KEY", "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")
+        GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+        if not GROQ_API_KEY:
+            raise ValueError("GROQ_API_KEY is not set")
         
         llm = ChatGroq(
             api_key=GROQ_API_KEY,
@@ -129,6 +132,15 @@ async def lifespan(app: FastAPI):
     logger.info("👋 Shutting down...")
 
 app = FastAPI(lifespan=lifespan, title="HerWellness API", version="1.0.0")
+
+# Allow browser clients served from other local origins (e.g., Live Server)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ========== System Prompt ==========
 SYSTEM_PROMPT = """أنت 'Maya'، مساعدة صحية ودودة تتكلم التونسي الدارجي. جاوب بلطف، واضح، وبلهجة قريبة من المستخدم.
@@ -454,4 +466,4 @@ async def serve_frontend():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8082)

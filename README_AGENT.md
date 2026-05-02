@@ -24,12 +24,12 @@ pip install -r requirements.txt
 3. Run the backend:
 
 ```powershell
-uvicorn agent:app --host 0.0.0.0 --port 8000
+uvicorn agent:app --host 0.0.0.0 --port 8082
 ```
 
 4. Open the test client in a browser:
 
-Open `voice_client.html` in the same folder (or serve the directory and open `http://localhost:8000/voice_client.html`).
+Open `voice_client.html` in the same folder (or serve the directory and open `http://localhost:8082/voice_client.html`).
 
 Architecture notes
 
