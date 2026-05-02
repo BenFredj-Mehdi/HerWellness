@@ -3,46 +3,42 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Pregnancy Month Guidance</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>HerWellness — Welcome</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="welcome.css" />
   </head>
   <body>
-    <main class="container">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <h1 id="site-title">إرشادات للحامل حسب الشهر</h1>
-        <div style="display:flex;gap:8px;align-items:center">
-          <label for="lang" class="muted">اللغة</label>
-          <select id="lang">
-            <option value="ar">العربية (تونسية)</option>
-            <option value="en">English</option>
-          </select>
+    <div class="bg-overlay"></div>
+    <div class="floating-orb orb-1" aria-hidden="true"></div>
+    <div class="floating-orb orb-2" aria-hidden="true"></div>
+    <div class="floating-orb orb-3" aria-hidden="true"></div>
+
+    <main class="welcome-shell">
+      <section class="hero-card">
+        <p class="eyebrow">HERWELLNESS</p>
+        <h1 class="title">
+          Welcome to <span>your smart pregnancy companion</span>
+        </h1>
+
+        <p class="subtitle">
+          <span class="intro">Personalized guidance, emotional support, and trusted help for every stage of your journey.</span>
+          <span class="dynamic-line" id="dynamic-line" aria-live="polite"></span>
+        </p>
+
+        <div class="cta-row">
+          <a class="start-btn" href="guidance.html" id="start-btn">
+            <span>Start</span>
+            <i aria-hidden="true">→</i>
+          </a>
         </div>
-      </div>
-
-      <p id="site-lead" class="lead">اختاري الشهر اللي انتِ فيه باش تشوفي المشاكل الشائعة والحلول المقترحة.</p>
-
-      <form id="month-form">
-        <label id="label-month" for="month">الشهر</label>
-        <select id="month" name="month">
-          <option value="">-- اختاري الشهر --</option>
-          <option value="1">الشهر 1</option>
-          <option value="2">الشهر 2</option>
-          <option value="3">الشهر 3</option>
-          <option value="4">الشهر 4</option>
-          <option value="5">الشهر 5</option>
-          <option value="6">الشهر 6</option>
-          <option value="7">الشهر 7</option>
-          <option value="8">الشهر 8</option>
-          <option value="9">الشهر 9</option>
-        </select>
-        <button id="submit-btn" type="submit">عرض الإرشادات</button>
-      </form>
-
-      <section id="results" aria-live="polite"></section>
-
-      <div id="chat-suggestion" style="margin-top:14px"></div>
+      </section>
     </main>
 
-    <script src="script.js"></script>
+    <script src="welcome.js"></script>
   </body>
 </html>
