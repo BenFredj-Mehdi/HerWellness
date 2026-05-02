@@ -9,8 +9,9 @@ import logging
 from datetime import datetime
 from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
@@ -367,102 +368,13 @@ async def websocket_endpoint(websocket: WebSocket, session_id: str):
 # ========== Frontend ==========
 @app.get("/", response_class=HTMLResponse)
 async def serve_frontend():
-    """Serve chat interface"""
-    return """
-    <!DOCTYPE html>
-    <html dir="rtl" lang="ar">
-    <head>
-        <meta charset="UTF-8">
-        <title>HerWellness - المساعد الصوتي للحامل</title>
-        <style>
-            body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
-            .chat-container { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-            .messages { height: 400px; overflow-y: auto; border-bottom: 1px solid #eee; margin-bottom: 20px; }
-            .message { margin: 10px; padding: 10px; border-radius: 10px; }
-            .user { background: #667eea; color: white; text-align: right; }
-            .assistant { background: #f0f0f0; color: #333; text-align: left; }
-            .input-area { display: flex; gap: 10px; }
-            input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; }
-            button { padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; }
-            .sources { font-size: 12px; color: #666; margin-top: 5px; }
-            .status { text-align: center; padding: 5px; font-size: 12px; color: #999; }
-        </style>
-    </head>
-    <body>
-        <div class="chat-container">
-            <h2>🤰 HerWellness - المساعد الصوتي للحامل</h2>
-            <div class="messages" id="messages">
-                <div class="message assistant">السلام عليكم! أنا Maya، كيفاش نقدر نعاونك اليوم؟ قلي شهرك وأعراضك</div>
-            </div>
-            <div class="input-area">
-                <input type="text" id="input" placeholder="اكتب سؤالك بالدارجة..." dir="rtl">
-                <button onclick="sendMessage()">إرسال</button>
-            </div>
-            <div class="status" id="status">⚡ جاهز</div>
-        </div>
-        
-        <script>
-            let sessionId = localStorage.getItem('sessionId') || crypto.randomUUID();
-            localStorage.setItem('sessionId', sessionId);
-            
-            async function sendMessage() {
-                const input = document.getElementById('input');
-                const text = input.value.trim();
-                if (!text) return;
-                
-                addMessage(text, 'user');
-                input.value = '';
-                document.getElementById('status').innerHTML = '🤔 جاري التفكير...';
-                
-                try {
-                    const response = await fetch('/api/chat', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            session_id: sessionId,
-                            text: text,
-                            language: 'ar-TN'
-                        })
-                    });
-                    
-                    const data = await response.json();
-                    addMessage(data.reply, 'assistant');
-                    
-                    if (data.sources && data.sources.length > 0) {
-                        addSources(data.sources);
-                    }
-                    
-                    document.getElementById('status').innerHTML = '✅ جاهز';
-                } catch (error) {
-                    document.getElementById('status').innerHTML = '❌ خطأ';
-                    addMessage('عذراً، حدث خطأ. حاول مرة أخرى', 'assistant');
-                }
-            }
-            
-            function addMessage(text, sender) {
-                const messagesDiv = document.getElementById('messages');
-                const msgDiv = document.createElement('div');
-                msgDiv.className = `message ${sender}`;
-                msgDiv.innerHTML = `<strong>${sender === 'user' ? '👩' : '🤖'}:</strong> ${text}`;
-                messagesDiv.appendChild(msgDiv);
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }
-            
-            function addSources(sources) {
-                const messagesDiv = document.getElementById('messages');
-                const sourceDiv = document.createElement('div');
-                sourceDiv.className = 'sources';
-                sourceDiv.innerHTML = '<strong>📚 المصادر:</strong> ' + sources.map(s => s.text_snippet.substring(0, 100)).join(' | ');
-                messagesDiv.appendChild(sourceDiv);
-            }
-            
-            document.getElementById('input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') sendMessage();
-            });
-        </script>
-    </body>
-    </html>
-    """
+    """Redirect root to the website landing page served as static content."""
+    return RedirectResponse(url="/index.html")
+
+
+# Serve website files (index.html, chat.html, assets, css, js) on same host/port.
+# Keep this mount after API/WS route declarations.
+app.mount("/", StaticFiles(directory=".", html=True), name="site")
 
 if __name__ == "__main__":
     import uvicorn
