@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ar">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>دردشة متقدمة</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .chat-box{max-width:820px;margin:18px auto;padding:16px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px}
+      .row{display:flex;gap:8px}
+      #messages{height:300px;overflow:auto;padding:8px}
+      .msg-user{color:#bff3ff}
+      .msg-bot{color:#e6f7ff}
+    </style>
+  </head>
+  <body>
+    <div class="chat-box">
+      <h2>دردشة نصيّة (تدعم Arabizi)</h2>
+      <div id="messages"></div>
+      <div style="margin-top:10px" class="row">
+        <input id="input" placeholder="اكتب بالدارجة أو باللاتيني" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)" />
+        <button id="send">ارسال</button>
+      </div>
+      <div style="margin-top:10px">
+        <button id="reset">Reset conversation</button>
+      </div>
+    </div>
+
+    <script>
+      const messages = document.getElementById('messages');
+      const input = document.getElementById('input');
+
+      async function sendText(text){
+        const res = await fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text})});
+        return res.json();
+      }
+
+      document.getElementById('send').addEventListener('click', async ()=>{
+        const txt = input.value.trim(); if(!txt) return;
+        const u = document.createElement('div'); u.className='msg-user'; u.textContent='أنت: '+txt; messages.appendChild(u);
+        input.value='';
+          let r;
+          try{
+            r = await sendText(txt);
+          }catch(err){
+            const be = document.createElement('div'); be.className='msg-bot'; be.textContent='المساعد: صار خطأ في الاتصال'; messages.appendChild(be); return;
+          }
+          const botReply = r && r.reply ? r.reply : (r && r.normalized ? 'ما فهمتش، جيت نقول: ' + r.normalized : 'سامحني، ما نجمش نجاوب توا');
+          const b = document.createElement('div'); b.className='msg-bot'; b.textContent='المساعد: '+botReply; messages.appendChild(b);
+        messages.scrollTop = messages.scrollHeight;
+      });
+
+      document.getElementById('reset').addEventListener('click', async ()=>{
+        await fetch('/ws/demo', {method:'POST'}).catch(()=>{});
+        messages.innerHTML='';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+:root{
+	--bg: #f3f7fb; /* soft medical background */
+	--card: #ffffff;
+	--accent: #0d6efd; /* bootstrap blue for trust */
+	--accent-2: #0b7285; /* teal alternative */
+	--muted: #556b78;
+	--text: #08203a;
+}
+
+*{box-sizing:border-box}
+body{
+	font-family: Inter, 'Segoe UI', Roboto, Arial, Helvetica, sans-serif;
+	background: radial-gradient(1200px 600px at 10% 10%, rgba(14,165,164,0.06), transparent),
+							radial-gradient(900px 500px at 90% 90%, rgba(109,40,217,0.05), transparent),
+							#071428;
+	color:var(--text);
+	margin:0;padding:36px;
+}
+
+.container{
+	max-width:920px;margin:0 auto;background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+	padding:28px;border-radius:14px;backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,0.05);
+	box-shadow:0 20px 50px rgba(2,6,23,0.6);
+}
+
+h1{margin:0 0 6px;font-weight:700;display:flex;align-items:center;gap:12px;color:#e6f7ff}
+h1#site-title::before{content:'';width:46px;height:46px;background:linear-gradient(135deg,#09c6f9,#6d28d9);border-radius:10px;display:inline-block;box-shadow:0 6px 18px rgba(109,40,217,0.25);transform:translateY(-2px)}
+.lead{color:#bcd7e6;margin-top:6px}
+
+form{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:22px 0}
+select{padding:10px;border:1px solid rgba(255,255,255,0.06);border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));min-width:180px;color:#e6f7ff}
+select option{color:#072033}
+button{background:linear-gradient(90deg,#06b6d4,#7c3aed);color:#fff;border:none;padding:10px 16px;border-radius:10px;cursor:pointer;box-shadow:0 10px 30px rgba(7,26,48,0.6)}
+button:hover{transform:translateY(-1px)}
+
+#results{margin-top:20px}
+.problem{border-left:4px solid rgba(255,255,255,0.12);padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;margin-bottom:14px;color:#e9fbff}
+.problem h3{margin:0 0 8px;font-size:1.05rem}
+.muted{color:#bcd7e6;font-size:0.95rem}
+
+.button-link{background:transparent;border:1px solid rgba(255,255,255,0.12);color:#c7f0ff;padding:8px 12px;border-radius:10px;text-decoration:none}
+.button-link:hover{background:linear-gradient(90deg, rgba(6,182,212,0.08), rgba(124,58,237,0.06))}
+
+/* Chatbot placeholder textarea styling */
+textarea{border:1px solid #e6f0f6;padding:10px;border-radius:6px;font-family:inherit}
+
+@media (max-width:520px){
+	.container{padding:18px}
+	form{flex-direction:column;align-items:stretch}
+	button{width:100%}
+}
+
+/* page background using the generated SVG */
+html,body{height:100%}
+body::before{
+	content:'';position:fixed;inset:0;background-image:url('assets/bg.svg');background-size:cover;background-position:center;opacity:0.85;z-index:-3;filter:grayscale(0.04) contrast(1.02);
+}
+
+/* subtle animated overlay */
+.container::after{content:'';position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(11,20,35,0.12));border-radius:14px}
+
